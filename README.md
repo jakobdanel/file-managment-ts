@@ -30,6 +30,10 @@ This module should be used to do stuff like file creating moving, copieng, etc. 
 - [ ] copy a file.
 - [ ] copy a dir.
 
+#### Rename
+- [ ] rename a file
+- [ ] rename a directory
+
 #### Move
 - [ ] move a file.
 - [ ] move a dir.
