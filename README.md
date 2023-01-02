@@ -46,12 +46,15 @@ Methods should be fully functional, meaning they should have no side-effects. Fo
 - [ ] Add an proper logger to the tool.
 
 ### Build
+To work with this project run:
+```git clone https://github.com/jakobdanel/file-managment-ts```
 
 #### Transpile
-TODO(1): Add a tutorial how to transile the ts source into js.
+1. cd into this directory.
+2. Run ```npx tsc main.ts```
 
 #### Test
-TODO(2): Add a tuturial ho to run the tests.
+TODO(1): Add a tuturial ho to run the tests.
 
 
 ### About
