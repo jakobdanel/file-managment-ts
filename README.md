@@ -4,7 +4,7 @@ This module should be used to do stuff like file creating moving, copieng, etc. 
 ### Features
 
 #### Creating 
-- [ ] create an empty file
+- [x] create an empty file
 - [ ] create an file with the content of a string
 - [ ] creating a directory.
 - [ ] creating a directory with files.
