@@ -19,7 +19,7 @@ interface FileTree {
 
 /**
  * @abstract This function will create an empty File. It uses the File class from file.ts
- * It ill creating a new File object and then checking if at the given path an File already exists.
+ * It will creating a new File object and then checking if at the given path a File already exists.
  * If so it will throw an error.
  * @param filePath The path to the file
  * @returns File the File object, for further manipulation
