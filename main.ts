@@ -1,5 +1,5 @@
 import File from "./file";
-
+import { existsSync } from "fs";
 
 //Data structures for file tree
 interface FileTreeItem {
@@ -41,7 +41,7 @@ export function createEmptyFile(filePath: string): File {
 
 
 /**
- * @paragraph This function will create a new file at the given path with the given contents.
+ * @abstract This function will create a new file at the given path with the given contents.
  * It will creating a new File object and then checking if at the given path a File already exists.
  * If so it will throw an error. For setting the contents of the file, it will use the File.updateContent()
  * method. 
@@ -71,12 +71,36 @@ export function createFileTree(fileTree: FileTree) {
     throw new Error("Not implemented");
 }
 
+//Check if the file/dir exists
+
+/**
+ * @abstract This method checks if the inputted file exists or not.
+ * If the filePath can not be resolved, the function will return false.
+ * @param filePath The path to the file which will be checked.
+ * @returns True if the file exists, false if not
+ */
+export function fileExists(filePath: string): boolean {
+    return existsSync(filePath);
+}
+
+export function dirExists(dirPath: string): boolean {
+    return existsSync(dirPath);
+};
+
 
 //get content
 
-export function getContent(filePath: string): string {
-    let file = new File(filePath);
-    return file.getContent();
+/**
+ * @abstract Returning the of the file. If the file exsists. If the file do not exists then
+ * the function will return null.
+ * @param filePath The path to the file where the file is located.
+ * @returns A string containing the content of the file. Null if the file do not exist.
+ */
+export function getContent(filePath: string): string | null {
+    if (fileExists(filePath)) {
+        let file = new File(filePath);
+        return file.getContent();
+    } else return null;
 }
 
 export function getMetaDataFile(filePath: string): any {

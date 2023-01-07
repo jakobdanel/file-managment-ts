@@ -1,6 +1,6 @@
 import { readFileSync, existsSync } from "fs";
 import * as path from "path";
-import { createEmptyFile, createFile, deleteFile } from "./main"
+import { createEmptyFile, createFile, deleteFile,fileExists } from "./main"
 import File from "./file";
 
 
@@ -51,7 +51,6 @@ describe("createEmptyFile()", () => {
 
 describe("createFile()", () => {
 
-
     let files: File[] = [];
     let filePaths: string[] = [];
     let fileContents: string[] = [];
@@ -67,9 +66,9 @@ describe("createFile()", () => {
         pushFileExampleToList("/test-dir/test_01.txt", "");
         pushFileExampleToList("/test-dir/test_02.txt", "This is a test. \n \" bla bla bla");
         pushFileExampleToList("/test-dir/test_03.txt", "Only for testing purposes");
-    
-        for(let i = 0; i < filePaths.length; i++) {
-            files.push(createFile(filePaths[i],fileContents[i]));
+
+        for (let i = 0; i < filePaths.length; i++) {
+            files.push(createFile(filePaths[i], fileContents[i]));
         }
     });
 
@@ -91,22 +90,74 @@ describe("createFile()", () => {
 
         console.log(filePaths)
     });
-    
+
     it("should have the correct contents in the file", () => {
         console.log(files);
-        
-        for(let i = 0; i < files.length; i++) {
+
+        for (let i = 0; i < files.length; i++) {
             expect(readFileSync(filePaths[i]).toString()).toBe(fileContents[i]);
         }
-        
+
     });
 
     it("should throw an error if the file path could not be resolved", () => {
-        expect(() => createFile("","")).toThrow("Error: Could not create the file. Please check the inputted path");
+        expect(() => createFile("", "")).toThrow("Error: Could not create the file. Please check the inputted path");
     });
 
     it("should throw an error if the file already exists", () => {
-        expect(() => createFile("./test-dir/test_01.txt","")).toThrow("File already exists");
+        expect(() => createFile("./test-dir/test_01.txt", "")).toThrow("File already exists");
     });
-         
+
+})
+
+
+describe("fileExists()", () => {
+    let files: File[] = [];
+    let filePaths: string[] = [];
+    let fileContents: string[] = [];
+
+    function pushFileExampleToList(filePath: string, fileContent: string): void {
+        filePaths.push(path.join(__dirname + filePath));
+        fileContents.push(fileContent);
+
+
+    }
+
+    beforeEach(() => {
+        pushFileExampleToList("/test-dir/test_01.txt", "");
+        pushFileExampleToList("/test-dir/test_02.txt", "This is a test. \n \" bla bla bla");
+        pushFileExampleToList("/test-dir/test_03.txt", "Only for testing purposes");
+
+        for (let i = 0; i < filePaths.length; i++) {
+            files.push(createFile(filePaths[i], fileContents[i]));
+        }
+    });
+
+    afterEach(() => {
+        for (let i = 0; i < files.length; i++) {
+            deleteFile(files[i].getPath());
+        }
+
+        files = [];
+        filePaths = [];
+        fileContents = [];
+    });
+
+
+    it("should return true if the file is existing", () => {
+
+        for (let i = 0; i < files.length; i++) {
+            expect(fileExists(filePaths[i])).toBe(true);
+        }
+
+    })
+
+    it("should return false if the file is not existing", () => {
+
+        expect(fileExists("./test-dir/no_file.txt")).toBe(false);
+        expect(fileExists("./test-dir/no_file.json")).toBe(false);
+        expect(fileExists("")).toBe(false);
+    })
+
+
 })
