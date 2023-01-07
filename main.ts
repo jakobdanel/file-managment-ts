@@ -40,10 +40,20 @@ export function createEmptyFile(filePath: string): File {
 
 
 
-
+/**
+ * @paragraph This function will create a new file at the given path with the given contents.
+ * It will creating a new File object and then checking if at the given path a File already exists.
+ * If so it will throw an error. For setting the contents of the file, it will use the File.updateContent()
+ * method. 
+ * @param filePath The path to the file to create
+ * @param content The content to set into the file
+ * @returns File the File object, for further manipulation
+ * @throws Error if the path pattern can not be resolved {@see file.ts}
+ * @throws Error if the file already exists.
+ */
 export function createFile(filePath: string, content: string): File {
     let file = new File(filePath);
-    if (file.log.includes("Created file: " + file.getPath())) {
+    if (!file.log.includes("Created file: " + file.getPath())) {
         throw new Error("File already exists");
     }
     file.updateContent(content);
