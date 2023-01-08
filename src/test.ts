@@ -133,7 +133,7 @@ describe("createFile()", () => {
     });
 
     it("should throw an error if the file already exists", () => {
-        expect(() => createFile("./test-dir/test_001.txt", "")).toThrow("File already exists");
+        expect(() => createFile(__dirname+ "/test-dir/test_001.txt", "")).toThrow("File already exists");
     });
 
 })
