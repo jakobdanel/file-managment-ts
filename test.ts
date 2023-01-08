@@ -1,7 +1,65 @@
 import { readFileSync, existsSync } from "fs";
 import * as path from "path";
-import { createEmptyFile, createFile, deleteFile,fileExists } from "./main"
+import { createEmptyFile, createFile, deleteFile, fileExists, getContent } from "./main"
 import File from "./file";
+import { addingNewLinesToString, generateFileName, generateRandomCharacters } from "./utils";
+
+
+/**
+ * @abstract Tracking which files are created in the actual test run.
+ * Here are files that stored in the ./test_dir directory in that moment
+ */
+let files: File[] = []
+
+/**
+ * @abstract The path to the files created in the actual test run
+ */
+let filePaths: string[] = []
+
+/**
+ * @abstract The content of the files created in the actual test run
+ */
+let fileContents: string[] = []
+
+/**
+ * @abstract This function will create a file in the actual test run. With the given filename
+ * and the given content. It will also update the three arrays storing the content of the dir.
+ * @param filePath The path where the file will be created. Is relative and start in the test-dir folder.
+ * @param fileContent The content for the created file.
+ */
+const createExampleFile = (filePath: string, fileContent: string) => {
+    let absolutePath = __dirname + "/test-dir/" + filePath;
+    filePaths.push(absolutePath);
+    fileContents.push(fileContent);
+    let f = new File(absolutePath)
+    f.addContent(fileContent)
+    files.push(f);
+}
+
+
+/**
+ * This function adding a bunch of files with random content to 
+ */
+const createExampleFiles = (n: number = 100) => {
+    if(n >= 1000){
+        console.log("WARNING: The implementation of the file name generator allows only three digits. For that reason n must be maximum of 1000. Set n to 1000.");
+        n = 1000;
+    }
+    createExampleFile("test_001.txt", "test");
+    for (let i = 2; i <= n; i++) {
+        let fName = generateFileName(i);
+        let content = generateRandomCharacters(10000);
+        content = addingNewLinesToString(content,100);
+        createExampleFile(fName, content);
+    }
+}
+
+const deleteExampleFiles = () => {
+    files.forEach(file => file.delete());
+    files = [];
+    filePaths = [];
+    fileContents = [];
+}
 
 
 describe("createEmptyFile()", () => {
@@ -51,36 +109,8 @@ describe("createEmptyFile()", () => {
 
 describe("createFile()", () => {
 
-    let files: File[] = [];
-    let filePaths: string[] = [];
-    let fileContents: string[] = [];
-
-    function pushFileExampleToList(filePath: string, fileContent: string): void {
-        filePaths.push(path.join(__dirname + filePath));
-        fileContents.push(fileContent);
-
-
-    }
-
-    beforeEach(() => {
-        pushFileExampleToList("/test-dir/test_01.txt", "");
-        pushFileExampleToList("/test-dir/test_02.txt", "This is a test. \n \" bla bla bla");
-        pushFileExampleToList("/test-dir/test_03.txt", "Only for testing purposes");
-
-        for (let i = 0; i < filePaths.length; i++) {
-            files.push(createFile(filePaths[i], fileContents[i]));
-        }
-    });
-
-    afterEach(() => {
-        for (let i = 0; i < files.length; i++) {
-            deleteFile(files[i].getPath());
-        }
-
-        files = [];
-        filePaths = [];
-        fileContents = [];
-    });
+    beforeEach(createExampleFiles)
+    afterEach(deleteExampleFiles)
 
     it("should create a file at the specified path", () => {
 
@@ -88,11 +118,9 @@ describe("createFile()", () => {
             expect(existsSync(filePaths[i])).toBe(true);
         }
 
-        console.log(filePaths)
     });
 
     it("should have the correct contents in the file", () => {
-        console.log(files);
 
         for (let i = 0; i < files.length; i++) {
             expect(readFileSync(filePaths[i]).toString()).toBe(fileContents[i]);
@@ -105,43 +133,16 @@ describe("createFile()", () => {
     });
 
     it("should throw an error if the file already exists", () => {
-        expect(() => createFile("./test-dir/test_01.txt", "")).toThrow("File already exists");
+        expect(() => createFile("./test-dir/test_001.txt", "")).toThrow("File already exists");
     });
 
 })
 
 
 describe("fileExists()", () => {
-    let files: File[] = [];
-    let filePaths: string[] = [];
-    let fileContents: string[] = [];
 
-    function pushFileExampleToList(filePath: string, fileContent: string): void {
-        filePaths.push(path.join(__dirname + filePath));
-        fileContents.push(fileContent);
-
-
-    }
-
-    beforeEach(() => {
-        pushFileExampleToList("/test-dir/test_01.txt", "");
-        pushFileExampleToList("/test-dir/test_02.txt", "This is a test. \n \" bla bla bla");
-        pushFileExampleToList("/test-dir/test_03.txt", "Only for testing purposes");
-
-        for (let i = 0; i < filePaths.length; i++) {
-            files.push(createFile(filePaths[i], fileContents[i]));
-        }
-    });
-
-    afterEach(() => {
-        for (let i = 0; i < files.length; i++) {
-            deleteFile(files[i].getPath());
-        }
-
-        files = [];
-        filePaths = [];
-        fileContents = [];
-    });
+    beforeEach(createExampleFiles)
+    afterEach(deleteExampleFiles)
 
 
     it("should return true if the file is existing", () => {
@@ -160,4 +161,25 @@ describe("fileExists()", () => {
     })
 
 
+})
+
+describe("getContent()", () => {
+
+    beforeEach(createExampleFiles)
+    afterEach(deleteExampleFiles)
+
+    it("should return null if the file does not exist", () => {
+
+        expect(getContent("./test-dir/no_file.txt")).toBe(null);
+        expect(getContent("./test-dir/no_file.json")).toBe(null);
+        expect(getContent("")).toBe(null);
+    });
+
+
+    it("should return the file contents", () => {
+
+        for (let i = 0; i < files.length; i++) {
+            expect(getContent(filePaths[i])).toBe(fileContents[i]);
+        }
+    })
 })
