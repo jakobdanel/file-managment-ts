@@ -12,6 +12,10 @@ interface Dir extends FileTreeItem {
     items: FileTreeItem[];
 }
 
+
+/**
+ * @abstract This FileTree represent a file structure.
+ */
 interface FileTree {
     root: string;
     items: FileTreeItem[];
@@ -23,7 +27,7 @@ interface FileTree {
  * If so it will throw an error.
  * @param filePath The path to the file
  * @returns File the File object, for further manipulation
- * @throws Error if the path pattern is invalid {@see file.ts}
+ * @throws Error if the path pattern is invalid \{@see file.ts\}
  * @throws Error if the file already exists.
  */
 export function createEmptyFile(filePath: string): File {
@@ -48,7 +52,7 @@ export function createEmptyFile(filePath: string): File {
  * @param filePath The path to the file to create
  * @param content The content to set into the file
  * @returns File the File object, for further manipulation
- * @throws Error if the path pattern can not be resolved {@see file.ts}
+ * @throws Error if the path pattern can not be resolved \{@see file.ts\}
  * @throws Error if the file already exists.
  */
 export function createFile(filePath: string, content: string): File {

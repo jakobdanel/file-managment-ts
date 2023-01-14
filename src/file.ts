@@ -28,7 +28,7 @@ export class File {
     //TODO(2): Add an proper log class here
 
     /**
-     * @abstract Constructing the file object. Setting the properties. Logging "Logged file: ${path}". If the file is not created yet it will create
+     * @abstract Constructing the file object. Setting the properties. Logging "Logged file: $\{path\}". If the file is not created yet it will create
      * the file and add an log message to the log.
      * @constructor
      * @param path The path to the file. Should be provided in an absolute way for robustness reasons.
