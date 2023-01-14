@@ -56,6 +56,7 @@ This module should be used to do stuff like file creating moving, copieng, etc. 
 - [ ] add content at the end of a file.
 - [ ] add content to a list of files.
 - [ ] add content to every file of a dir.
+
 #### Deleting
 - [ ] delete a file.
 - [ ] delete a dir (recursive and non recursive)
@@ -93,8 +94,20 @@ To work with this project run:
 2. Run ```npx tsc main.ts```
 
 #### Test
-TODO(1): Add a tuturial ho to run the tests.
+1. cd into this directory
+2. Run ```npm run test```
 
+#### Documentation
+The documentation will be build automatically via typedoc and the typedoc plugin typedoc-plugin-markdown. Via the concat-md tool the generated Markdown Files are getting pushed into this README file. 
+
+##### Rebuild the README file.
+1. cd into this directory.
+2. Run ```./build_documentation```
+
+##### Manually modify the README
+If you want to add content to this self written part of the README:
+1. Modify the content inside of ```./readme_content.md```
+2. Rebuild the markdwon file.
 
 ### About
 Author: [Jakob Danel](https://github.com/jakobdanel)
@@ -170,7 +183,7 @@ Error If the file is not created yet and cannot be created due to permissions/in
 
 ##### Defined in
 
-[file.ts:37](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/file.ts#L37)
+[file.ts:37](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/file.ts#L37)
 
 ### Properties
 
@@ -186,7 +199,7 @@ represents the path of the file. Should always be an absolute path.
 
 ##### Defined in
 
-[file.ts:19](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/file.ts#L19)
+[file.ts:19](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/file.ts#L19)
 
 ___
 
@@ -204,7 +217,7 @@ containing strings with informations about the actions which have taken place on
 
 ##### Defined in
 
-[file.ts:27](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/file.ts#L27)
+[file.ts:27](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/file.ts#L27)
 
 ### Methods
 
@@ -226,7 +239,7 @@ Error If the file was already deleted it throws an error.
 
 ##### Defined in
 
-[file.ts:63](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/file.ts#L63)
+[file.ts:63](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/file.ts#L63)
 
 ___
 
@@ -254,7 +267,7 @@ Error if the File was already deleted.
 
 ##### Defined in
 
-[file.ts:113](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/file.ts#L113)
+[file.ts:113](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/file.ts#L113)
 
 ___
 
@@ -282,7 +295,7 @@ Error if the file was already deleted.
 
 ##### Defined in
 
-[file.ts:147](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/file.ts#L147)
+[file.ts:147](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/file.ts#L147)
 
 ___
 
@@ -306,7 +319,7 @@ Copieng the content of the file inside another file.
 
 ##### Defined in
 
-[file.ts:135](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/file.ts#L135)
+[file.ts:135](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/file.ts#L135)
 
 ___
 
@@ -328,7 +341,7 @@ Error if the File was already deleted.
 
 ##### Defined in
 
-[file.ts:123](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/file.ts#L123)
+[file.ts:123](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/file.ts#L123)
 
 ___
 
@@ -352,7 +365,7 @@ The content of the file as a string
 
 ##### Defined in
 
-[file.ts:75](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/file.ts#L75)
+[file.ts:75](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/file.ts#L75)
 
 ___
 
@@ -380,7 +393,7 @@ The metadata of the file.
 
 ##### Defined in
 
-[file.ts:86](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/file.ts#L86)
+[file.ts:86](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/file.ts#L86)
 
 ___
 
@@ -400,7 +413,7 @@ The path of the file
 
 ##### Defined in
 
-[file.ts:54](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/file.ts#L54)
+[file.ts:54](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/file.ts#L54)
 
 ___
 
@@ -428,7 +441,7 @@ Error if the file was already deleted.
 
 ##### Defined in
 
-[file.ts:158](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/file.ts#L158)
+[file.ts:158](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/file.ts#L158)
 
 ___
 
@@ -456,7 +469,7 @@ Error if the File was already deleted.
 
 ##### Defined in
 
-[file.ts:102](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/file.ts#L102)
+[file.ts:102](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/file.ts#L102)
 
 
 <a name="modulesmd"></a>
@@ -542,7 +555,7 @@ Error if the File was already deleted.
 
 ##### Defined in
 
-[main.ts:131](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L131)
+[main.ts:131](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L131)
 
 ___
 
@@ -563,7 +576,7 @@ ___
 
 ##### Defined in
 
-[main.ts:124](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L124)
+[main.ts:124](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L124)
 
 ___
 
@@ -584,7 +597,7 @@ ___
 
 ##### Defined in
 
-[main.ts:136](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L136)
+[main.ts:136](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L136)
 
 ___
 
@@ -605,7 +618,7 @@ ___
 
 ##### Defined in
 
-[main.ts:170](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L170)
+[main.ts:170](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L170)
 
 ___
 
@@ -626,7 +639,7 @@ ___
 
 ##### Defined in
 
-[main.ts:166](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L166)
+[main.ts:166](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L166)
 
 ___
 
@@ -647,7 +660,7 @@ ___
 
 ##### Defined in
 
-[main.ts:160](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L160)
+[main.ts:160](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L160)
 
 ___
 
@@ -667,7 +680,7 @@ ___
 
 ##### Defined in
 
-[main.ts:65](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L65)
+[main.ts:65](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L65)
 
 ___
 
@@ -703,7 +716,7 @@ File the File object, for further manipulation
 
 ##### Defined in
 
-[main.ts:29](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L29)
+[main.ts:29](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L29)
 
 ___
 
@@ -741,7 +754,7 @@ File the File object, for further manipulation
 
 ##### Defined in
 
-[main.ts:54](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L54)
+[main.ts:54](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L54)
 
 ___
 
@@ -761,7 +774,7 @@ ___
 
 ##### Defined in
 
-[main.ts:70](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L70)
+[main.ts:70](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L70)
 
 ___
 
@@ -781,7 +794,7 @@ ___
 
 ##### Defined in
 
-[main.ts:154](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L154)
+[main.ts:154](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L154)
 
 ___
 
@@ -801,7 +814,7 @@ ___
 
 ##### Defined in
 
-[main.ts:148](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L148)
+[main.ts:148](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L148)
 
 ___
 
@@ -821,7 +834,7 @@ ___
 
 ##### Defined in
 
-[main.ts:86](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L86)
+[main.ts:86](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L86)
 
 ___
 
@@ -848,7 +861,7 @@ True if the file exists, false if not
 
 ##### Defined in
 
-[main.ts:82](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L82)
+[main.ts:82](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L82)
 
 ___
 
@@ -875,7 +888,7 @@ A string containing the content of the file. Null if the file do not exist.
 
 ##### Defined in
 
-[main.ts:99](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L99)
+[main.ts:99](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L99)
 
 ___
 
@@ -895,7 +908,7 @@ ___
 
 ##### Defined in
 
-[main.ts:111](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L111)
+[main.ts:111](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L111)
 
 ___
 
@@ -915,7 +928,7 @@ ___
 
 ##### Defined in
 
-[main.ts:106](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L106)
+[main.ts:106](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L106)
 
 ___
 
@@ -936,7 +949,7 @@ ___
 
 ##### Defined in
 
-[main.ts:199](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L199)
+[main.ts:199](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L199)
 
 ___
 
@@ -957,7 +970,7 @@ ___
 
 ##### Defined in
 
-[main.ts:193](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L193)
+[main.ts:193](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L193)
 
 ___
 
@@ -978,7 +991,7 @@ ___
 
 ##### Defined in
 
-[main.ts:186](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L186)
+[main.ts:186](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L186)
 
 ___
 
@@ -999,7 +1012,7 @@ ___
 
 ##### Defined in
 
-[main.ts:179](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L179)
+[main.ts:179](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L179)
 
 ___
 
@@ -1020,7 +1033,7 @@ ___
 
 ##### Defined in
 
-[main.ts:117](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/main.ts#L117)
+[main.ts:117](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/main.ts#L117)
 
 
 <a name="modulestestmd"></a>
@@ -1083,7 +1096,7 @@ The modified string, with evenly new lines added
 
 ##### Defined in
 
-[utils.ts:62](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/utils.ts#L62)
+[utils.ts:62](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/utils.ts#L62)
 
 ___
 
@@ -1113,7 +1126,7 @@ Error if the condition is false
 
 ##### Defined in
 
-[utils.ts:12](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/utils.ts#L12)
+[utils.ts:12](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/utils.ts#L12)
 
 ___
 
@@ -1141,7 +1154,7 @@ Error if the number is not an integer.
 
 ##### Defined in
 
-[utils.ts:32](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/utils.ts#L32)
+[utils.ts:32](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/utils.ts#L32)
 
 ___
 
@@ -1169,7 +1182,7 @@ Error if the number is not positive or 0
 
 ##### Defined in
 
-[utils.ts:23](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/utils.ts#L23)
+[utils.ts:23](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/utils.ts#L23)
 
 ___
 
@@ -1209,7 +1222,7 @@ The semi random file name
 
 ##### Defined in
 
-[utils.ts:143](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/utils.ts#L143)
+[utils.ts:143](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/utils.ts#L143)
 
 ___
 
@@ -1243,7 +1256,7 @@ A string concenate the generated characters
 
 ##### Defined in
 
-[utils.ts:43](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/utils.ts#L43)
+[utils.ts:43](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/utils.ts#L43)
 
 ___
 
@@ -1292,7 +1305,7 @@ A string representing n with targetLength characters
 
 ##### Defined in
 
-[utils.ts:122](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/utils.ts#L122)
+[utils.ts:122](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/utils.ts#L122)
 
 ___
 
@@ -1324,4 +1337,4 @@ The random choosen value.
 
 ##### Defined in
 
-[utils.ts:106](https://github.com/jakobdanel/file-managment-ts/blob/94174d5/src/utils.ts#L106)
+[utils.ts:106](https://github.com/jakobdanel/file-managment-ts/blob/ed244e6/src/utils.ts#L106)

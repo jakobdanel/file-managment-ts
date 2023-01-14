@@ -21,6 +21,7 @@ This module should be used to do stuff like file creating moving, copieng, etc. 
 - [ ] add content at the end of a file.
 - [ ] add content to a list of files.
 - [ ] add content to every file of a dir.
+
 #### Deleting
 - [ ] delete a file.
 - [ ] delete a dir (recursive and non recursive)
@@ -58,8 +59,20 @@ To work with this project run:
 2. Run ```npx tsc main.ts```
 
 #### Test
-TODO(1): Add a tuturial ho to run the tests.
+1. cd into this directory
+2. Run ```npm run test```
 
+#### Documentation
+The documentation will be build automatically via typedoc and the typedoc plugin typedoc-plugin-markdown. Via the concat-md tool the generated Markdown Files are getting pushed into this README file. 
+
+##### Rebuild the README file.
+1. cd into this directory.
+2. Run ```./build_documentation```
+
+##### Manually modify the README
+If you want to add content to this self written part of the README:
+1. Modify the content inside of ```./readme_content.md```
+2. Rebuild the markdwon file.
 
 ### About
 Author: [Jakob Danel](https://github.com/jakobdanel)
