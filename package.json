@@ -199,7 +199,7 @@
   "scripts": {
     "test": "jest src/test.ts",
     "transpile": "npx tsc",
-    "docs": "npx typedoc --plugin typedoc-plugin-markdown --out docs src/file.ts src/main.ts src/test.ts src/utils.ts"
+    "play": "npm run transpile && node dist/playground.js"
   },
   "repository": {
     "type": "git",
