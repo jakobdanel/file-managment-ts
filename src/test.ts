@@ -1,7 +1,7 @@
 import { readFileSync, existsSync } from "fs";
 import * as path from "path";
 import { createEmptyFile, createFile, deleteFile, fileExists, getContent } from "./main"
-import File from "./file";
+import {File} from "./file";
 import { addingNewLinesToString, generateFileName, generateRandomCharacters } from "./utils";
 
 

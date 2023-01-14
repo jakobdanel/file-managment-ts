@@ -8,7 +8,7 @@ import { existsSync, writeFileSync, readFileSync, statSync, appendFileSync, unli
  * @class File
  * @author Jakob Danel
  */
-export default class File {
+export class File {
 
     /**
      * @abstract represents the path of the file. Should always be an absolute path.

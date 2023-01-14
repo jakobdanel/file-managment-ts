@@ -1,4 +1,4 @@
-import File from "./file";
+import { File } from "./file";
 import { existsSync } from "fs";
 
 //Data structures for file tree
