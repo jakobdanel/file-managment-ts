@@ -197,8 +197,9 @@
     "yocto-queue": "^0.1.0"
   },
   "scripts": {
-    "test": "jest test.ts",
-    "transpile": "npx tsc"
+    "test": "jest src/test.ts",
+    "transpile": "npx tsc",
+    "docs": "npx typedoc --plugin typedoc-plugin-markdown --out docs src/file.ts src/main.ts src/test.ts src/utils.ts"
   },
   "repository": {
     "type": "git",
@@ -222,7 +223,11 @@
   "homepage": "https://github.com/jakobdanel/file-managment-ts#readme",
   "devDependencies": {
     "@types/jest": "^29.2.5",
+    "concat-md": "^0.5.0",
     "jest": "^29.3.1",
-    "ts-jest": "^29.0.3"
+    "showdown": "^2.1.0",
+    "ts-jest": "^29.0.3",
+    "typedoc": "^0.23.24",
+    "typedoc-plugin-markdown": "^3.14.0"
   }
 }
