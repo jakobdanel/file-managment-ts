@@ -5,12 +5,16 @@ This module should be used to do stuff like file creating moving, copieng, etc. 
 
 #### Creating 
 - [x] create an empty file
-- [ ] create an file with the content of a string
+- [x] create an file with the content of a string
 - [ ] creating a directory.
 - [ ] creating a directory with files.
 
+#### Check existences
+- [x] check if a file exists
+- [ ] check if a directory exists
+
 #### Get content
-- [ ] get the content of a file.
+- [x] get the content of a file.
 - [ ] show metadata of a file.
 - [ ] show metadata of a dir.
 - [ ] (optional) search files (by regex).
