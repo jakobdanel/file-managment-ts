@@ -44,6 +44,9 @@ This module should be used to do stuff like file creating moving, copieng, etc. 
 - [ ] move a dir.
 
 
+### Limitations
+The library is at the moment only usable for utf-8 encoded files in terms of reading, and adding content to the file. All other features should work properly (not tested atm). Encoding of other file formats, e.g. imaage formats, could be an enhancement in the future.
+
 ### Structure
 Methods should be fully functional, meaning they should have no side-effects. For the start every function is in the same file, maybe a proper reorganisation of the functions later. Methods are only available by a js/ts call a cli API is not planned, because of the Linux build in tools.
 
