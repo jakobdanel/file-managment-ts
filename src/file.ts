@@ -1,5 +1,7 @@
 import { existsSync, writeFileSync, readFileSync, statSync, appendFileSync, unlinkSync, copyFileSync, renameSync } from 'fs';
 
+import { InvalidFilePathError } from './error';
+
 
 
 /**
@@ -40,7 +42,7 @@ export class File {
      * the file and add an log message to the log.
      * @constructor
      * @param path The path to the file. Should be provided in an absolute way for robustness reasons.
-     * @throws Error If the file is not created yet and cannot be created due to permissions/invalid path pattern
+     * @throws {InvalidFilePathError} If the file is not created yet and cannot be created due to permissions/invalid path pattern
      */
     constructor(path: string) {
         this.#path = path;
@@ -49,7 +51,7 @@ export class File {
             try {
                 writeFileSync(this.#path, "");
             } catch (e) {
-                throw new Error("Error: Could not create the file. Please check the inputted path!");
+                throw new InvalidFilePathError(path);
             }
             this.log.push("Created file: " + this.#path);
         }
