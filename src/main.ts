@@ -141,11 +141,17 @@ export function writeFile(filePath: string, content: string): File {
 }
 
 
+/**
+ * @abstract This function will add the content of the file at the specified file path to the end of the file. If the file already exists, the content is
+ * the form oldContent + content, if the file was not created before, the file will be created and the content are placed inside the File.
+ * @param filePath The path from the file where the content will be placed.
+ * @param content The content which will be placed inside the file.
+ * @returns The file object, for operation chaining purposes.
+ */
 export function addContentFile(filePath: string, content: string): File {
     let file = new File(filePath);
     file.addContent(content);
     return file;
-
 }
 
 export function addContentDir(dirPath: string, content: string) {

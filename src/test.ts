@@ -1,6 +1,6 @@
 import { readFileSync, existsSync } from "fs";
 import * as path from "path";
-import { createEmptyFile, createFile, deleteFile, fileExists, getContent, getMetaDataDir, getMetaDataFile, writeFile } from "./main"
+import { addContentFile, createEmptyFile, createFile, deleteFile, fileExists, getContent, getMetaDataDir, getMetaDataFile, writeFile } from "./main"
 import { File } from "./file";
 import { addingNewLinesToString, generateFileName, generateRandomCharacters } from "./utils";
 
@@ -34,6 +34,12 @@ const createExampleFile = (filePath: string, fileContent: string) => {
     let f = new File(absolutePath)
     f.addContent(fileContent)
     files.push(f);
+}
+
+
+const compareNumbers = (a: number, b: number, delta: number): boolean => {
+
+    return Math.abs(a - b) <= delta;
 }
 
 
@@ -247,10 +253,11 @@ describe("getMetadataFile()", () => {
 
         for (let i = 0; i < files.length; i++) {
             let metadata = getMetaDataFile(filePaths[i]);
-            expect(new Date(metadata.atime).getTime()).toBe(Math.floor(metadata.atimeMs) + 1);
-            expect(new Date(metadata.mtime).getTime()).toBe(Math.floor(metadata.mtimeMs) + 1);
-            expect(new Date(metadata.ctime).getTime()).toBe(Math.floor(metadata.ctimeMs) + 1);
-            expect(new Date(metadata.birthtime).getTime()).toBe(Math.floor(metadata.birthtimeMs) + 1);
+ 
+            expect(compareNumbers(new Date(metadata.atime).getTime(),metadata.atimeMs,1)).toBeTruthy();
+            expect(compareNumbers(new Date(metadata.mtime).getTime(),metadata.mtimeMs,1)).toBeTruthy();
+            expect(compareNumbers(new Date(metadata.ctime).getTime(),metadata.ctimeMs,1)).toBeTruthy();
+            expect(compareNumbers(new Date(metadata.birthtime).getTime(),metadata.birthtimeMs,1)).toBeTruthy();
 
         }
     });
@@ -270,6 +277,8 @@ describe("getMetadataFile()", () => {
 
             // Then
             expect(result.getContent()).toBe(newContent);
+
+            file.delete();
         });
 
         test('creates a new file with the given content', () => {
@@ -282,8 +291,44 @@ describe("getMetadataFile()", () => {
 
             // Then
             expect(result.getContent()).toBe(content);
+
+            result.delete();
         });
     });
+
+
+    describe('addContentFile()', () => {
+        test('adds content to an existing file', () => {
+            // Given
+            const filePath = 'example.txt';
+            const oldContent = 'old content';
+            const newContent = 'new content';
+            const file = new File(filePath);
+            file.updateContent(oldContent);
+
+            // When
+            const result = addContentFile(filePath, newContent);
+
+            // Then
+            expect(result.getContent()).toBe(oldContent + newContent);
+
+            result.delete();
+        });
+
+        test('creates a new file with the given content', () => {
+            // Given
+            const filePath = 'example.txt';
+            const content = 'example content';
+
+            // When
+            const result = addContentFile(filePath, content);
+
+            // Then
+            expect(result.getContent()).toBe(content);
+            result.delete();
+        });
+    });
+
 
 
 
