@@ -1,6 +1,14 @@
 import { existsSync, writeFileSync, readFileSync, statSync, appendFileSync, unlinkSync, copyFileSync, renameSync } from 'fs';
 
 
+
+/**
+ * @abstract This type describe a function which expecting a String value and returning a String value also. This type is used inside the File class
+ * for modification of files data.
+ * @example StringModifier: function(string: string) { return string.split(' ')}
+ */
+type StringModifier = (s: string) => string;
+
 /**
  * @abstract This class is used to represent a file. It shoul use at the one Hand as helper for the functions of the main.ts file, but also
  * can be used individually. The main advantage of this class is that you can easily chain multiple operations e.g. first adding content to a file
@@ -84,6 +92,7 @@ export class File {
      * @throws Error If the metadata could not be read.
      */
     getMetadata(): any {
+        // TODO Adding documentation for the format of the metadata.
         this.#checkDelete();
         try {
             const stats = statSync(this.#path);
@@ -116,6 +125,12 @@ export class File {
         this.log.push("Added content to file: " + this.#path);
     }
 
+    modifyContent(lambda: StringModifier): void {
+        this.#checkDelete();
+        const fileContent = this.getContent();
+        const out = lambda(fileContent);
+        this.updateContent(out);
+    }
     /**
      * @abstract Delete the file. After that move the object is not useable anymore. Every function call will throw an error.
      * @throws Error if the File was already deleted.
@@ -149,7 +164,7 @@ export class File {
         copyFileSync(this.#path, destFilePath);
         this.log.push("Copied file: " + this.#path);
     }
-    
+
     /**
      * @abstract Moving the File to a new location. Update the path property.
      * @param newPath The path where to move the file.
