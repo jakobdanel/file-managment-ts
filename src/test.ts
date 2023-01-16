@@ -1,7 +1,7 @@
 import { readFileSync, existsSync } from "fs";
 import * as path from "path";
-import { createEmptyFile, createFile, deleteFile, fileExists, getContent } from "./main"
-import {File} from "./file";
+import { createEmptyFile, createFile, deleteFile, fileExists, getContent, getMetaDataDir, getMetaDataFile, writeFile } from "./main"
+import { File } from "./file";
 import { addingNewLinesToString, generateFileName, generateRandomCharacters } from "./utils";
 
 
@@ -38,10 +38,29 @@ const createExampleFile = (filePath: string, fileContent: string) => {
 
 
 /**
+ * @abstract This function will check if the given object contains all of the required keys on top level of the object hierarchy. This means if the 
+ * key is used inside the object hierarchy, but only inside a nested object structure, the function will return false.
+ * @param object The object to check
+ * @param keys The keys which are required
+ * @returns True if all keys are inside the top level of the object, false if not.
+ * @example containsKeys({a: "a",b:"b"},["a","b"]) = true
+ * @example containsKeys({a: "a",b:"b"},["a","b", "c"]) = false
+ * @example containsKeys({a: "a",b: {c: "c"}},["a","b","c"]) = false
+ */
+const containsKeys = (object: Object, keys: string[]): boolean => {
+    for (let i = 0; i < keys.length; i++) {
+        if (!Object.keys(object).includes(keys[i])) {
+            return false;
+        }
+    };
+    return true;
+}
+
+/**
  * This function adding a bunch of files with random content to 
  */
 const createExampleFiles = (n: number = 100) => {
-    if(n >= 1000){
+    if (n >= 1000) {
         console.log("WARNING: The implementation of the file name generator allows only three digits. For that reason n must be maximum of 1000. Set n to 1000.");
         n = 1000;
     }
@@ -49,7 +68,7 @@ const createExampleFiles = (n: number = 100) => {
     for (let i = 2; i <= n; i++) {
         let fName = generateFileName(i);
         let content = generateRandomCharacters(10000);
-        content = addingNewLinesToString(content,100);
+        content = addingNewLinesToString(content, 100);
         createExampleFile(fName, content);
     }
 }
@@ -133,7 +152,7 @@ describe("createFile()", () => {
     });
 
     it("should throw an error if the file already exists", () => {
-        expect(() => createFile(__dirname+ "/test-dir/test_001.txt", "")).toThrow("File already exists");
+        expect(() => createFile(__dirname + "/test-dir/test_001.txt", "")).toThrow("File already exists");
     });
 
 })
@@ -183,3 +202,89 @@ describe("getContent()", () => {
         }
     })
 })
+
+describe("getMetadataFile()", () => {
+
+    beforeEach(createExampleFiles);
+    afterEach(deleteExampleFiles);
+
+    const expectedKeys: string[] = [
+        "dev",
+        "mode",
+        "nlink",
+        "uid",
+        "gid",
+        "rdev",
+        "blksize",
+        "ino",
+        "size",
+        "blocks",
+        "atimeMs",
+        "mtimeMs",
+        "ctimeMs",
+        "birthtimeMs",
+        "atime",
+        "mtime",
+        "ctime",
+        "birthtime"
+    ];
+
+    it("should return an object with metadata", () => {
+
+        for (let i = 0; i < files.length; i++) {
+            expect(getMetaDataFile(filePaths[i])).toBeDefined();
+        }
+    });
+
+
+    it("should have the correct metadata keys", () => {
+        for (let i = 0; i < files.length; i++) {
+            expect(containsKeys(getMetaDataFile(filePaths[i]), expectedKeys)).toBe(true);
+        }
+    });
+
+    it("should contain the same timestamps in datetime format as in ms format", () => {
+
+        for (let i = 0; i < files.length; i++) {
+            let metadata = getMetaDataFile(filePaths[i]);
+            expect(new Date(metadata.atime).getTime()).toBe(Math.floor(metadata.atimeMs) + 1);
+            expect(new Date(metadata.mtime).getTime()).toBe(Math.floor(metadata.mtimeMs) + 1);
+            expect(new Date(metadata.ctime).getTime()).toBe(Math.floor(metadata.ctimeMs) + 1);
+            expect(new Date(metadata.birthtime).getTime()).toBe(Math.floor(metadata.birthtimeMs) + 1);
+
+        }
+    });
+
+
+    describe('writeFile()', () => {
+        test('overwrites the content of an existing file', () => {
+            // Given
+            const filePath = 'example.txt';
+            const oldContent = 'old content';
+            const newContent = 'new content';
+            const file = new File(filePath);
+            file.updateContent(oldContent);
+
+            // When
+            const result = writeFile(filePath, newContent);
+
+            // Then
+            expect(result.getContent()).toBe(newContent);
+        });
+
+        test('creates a new file with the given content', () => {
+            // Given
+            const filePath = 'example.txt';
+            const content = 'example content';
+
+            // When
+            const result = writeFile(filePath, content);
+
+            // Then
+            expect(result.getContent()).toBe(content);
+        });
+    });
+
+
+
+});

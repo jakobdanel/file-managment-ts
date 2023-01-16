@@ -107,6 +107,13 @@ export function getContent(filePath: string): string | null {
     } else return null;
 }
 
+
+//TODO Document the returned metadata properly, maybe transform them to own format.
+/**
+ * @abstract This function returning the metadata of the file.
+ * @param filePath The path from the file with the metadata to check.
+ * @returns The metadata of the file.
+ */
 export function getMetaDataFile(filePath: string): any {
     let file = new File(filePath);
     return file.getMetadata();
@@ -118,6 +125,15 @@ export function getMetaDataDir(dirPath: string) {
 }
 
 //Add content
+
+
+/**
+ * @abstract This function will overwrite the content of the file at the specified file path, with content. If the file already exists
+ * the old content will be overwritten, if the file did not exist the file will be created and the content placed inside the file.
+ * @param filePath The path from the file where the content will be placed
+ * @param content The content which will be placed inside the file
+ * @returns The file object, for operation chaining purposes.
+ */
 export function writeFile(filePath: string, content: string): File {
     let file = new File(filePath);
     file.updateContent(content);
