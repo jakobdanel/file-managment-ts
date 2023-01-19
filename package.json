@@ -216,6 +216,7 @@
     "move",
     "js"
   ],
+  "type": "module",
   "author": "Jakob Danel",
   "license": "ISC",
   "bugs": {
