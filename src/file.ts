@@ -102,7 +102,7 @@ export class File {
             return stats;
         } catch (error) {
             this.log.push("Could not read metadata: " + error);
-            throw new Error(error.message);
+            throw error;
         }
     }
 
