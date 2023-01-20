@@ -216,7 +216,7 @@
     "move",
     "js"
   ],
-  "type": "module",
+  "type": "commonjs",
   "author": "Jakob Danel",
   "license": "ISC",
   "bugs": {
