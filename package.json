@@ -4,7 +4,7 @@
   },
   "name": "file-managment-ts",
   "description": "This module should be used to do stuff like file creating moving, copieng, etc. via Typescript/Javascript. It will contain basic API functions to input in your code. Implementation by implementing in ts and adding the ts flavour later.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "./src/main.ts",
   "dependencies": {
     "ansi-escapes": "^4.3.2",
