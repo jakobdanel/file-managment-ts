@@ -1,7 +1,7 @@
 #!/bin/bash
 # This script is used to build the documentation of the project. It will generate Markdown for each file in the project and then
 # concat the markdowns into one single file and pushing it into the README file.
-npx typedoc --plugin typedoc-plugin-markdown --theme markdown --out temp-docs src/file.ts src/main.ts src/test.ts src/utils.ts
+npx typedoc --plugin typedoc-plugin-markdown --theme markdown --out temp-docs src/*
 rm temp-docs/README.md
 cp readme_content.md temp-docs/README.md
 npx concat-md --toc --decrease-title-levels --dir-name-as-title temp-docs > README.md
