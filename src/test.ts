@@ -3,6 +3,7 @@ import * as path from "path";
 import { addContentFile, createEmptyFile, createFile, deleteFile, fileExists, getContent, getMetaDataDir, getMetaDataFile, writeFile } from "./main"
 import { File } from "./file";
 import { addingNewLinesToString, generateFileName, generateRandomCharacters } from "./utils";
+import { InvalidFilePathError } from "./error";
 
 
 /**
@@ -124,7 +125,7 @@ describe("createEmptyFile()", () => {
 
     it("should throw an error if the file path could not be resolved", () => {
 
-        expect(() => createEmptyFile("")).toThrow("Error: Could not create the file. Please check the inputted path!");
+        expect(() => createEmptyFile("")).toThrow(InvalidFilePathError);
 
     })
 
@@ -154,7 +155,7 @@ describe("createFile()", () => {
     });
 
     it("should throw an error if the file path could not be resolved", () => {
-        expect(() => createFile("", "")).toThrow("Error: Could not create the file. Please check the inputted path");
+        expect(() => createFile("", "")).toThrow(InvalidFilePathError);
     });
 
     it("should throw an error if the file already exists", () => {
