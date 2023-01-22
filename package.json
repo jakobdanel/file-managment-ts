@@ -198,9 +198,10 @@
     "yocto-queue": "^0.1.0"
   },
   "scripts": {
-    "test": "jest src/test.ts",
+    "test": "jest src/*.test.ts",
     "transpile": "npx tsc",
-    "play": "npm run transpile && node dist/playground.js"
+    "play": "npm run transpile && node dist/playground.js",
+    "documentation": "./build/build_documentation"
   },
   "repository": {
     "type": "git",
