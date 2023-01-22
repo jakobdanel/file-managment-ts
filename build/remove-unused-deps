@@ -9,3 +9,4 @@ echo "uninstall : $dep"
 npm uninstall "$dep"
 n=$((n+1))
 done < $file 
+rm $file
