@@ -1,5 +1,5 @@
 import "jest"
-import { addingNewLinesToString, assert, assertInteger, assertNotNegative, buildTableFromArray, flattern2DArray, generateRandomCharacters, leadingZeros, randomArrayValue } from "./utils";
+import { addingNewLinesToString, assert, assertInteger, assertNotNegative, buildTableFromArray, flattern2DArray, generateFileName, generateRandomCharacters, leadingZeros, randomArrayValue } from "./utils";
 
 describe("assert()", () => {
 
@@ -155,3 +155,10 @@ describe("leadingZeros()", () => {
 
     });
 });
+
+describe("generateFileName()",() => {
+
+    it("should start with 'test_",() => {
+        expect(generateFileName(1)).toMatch(/^test_/);
+    });
+})
