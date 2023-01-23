@@ -32,7 +32,11 @@ export class Char {
     }
 
     /**
-     * fromString
+     * @abstract Building an array of characters from a string. Iterates over each element of the
+     * string and creating characters from them.
+     * @param s The string to build the chars from
+     * @static
+     * @returns An array of characters. 
      */
     public static fromString(s: string): Char[] {
         let result: Char[] = [];

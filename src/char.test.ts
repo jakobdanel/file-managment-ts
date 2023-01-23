@@ -15,4 +15,23 @@ describe("Char", () => {
             expect(new Char("\n").value).toBe("\n");
         });
     });
+
+
+    describe("fromString",() => {
+
+        it("should have the correct length",() => {
+
+            expect(Char.fromString("Hello, world!").length).toEqual(13);
+            expect(Char.fromString("").length).toEqual(0);
+        });
+
+        it("should have the correct characters",() => {
+            let string = "Hello, world!";
+            let chars = Char.fromString(string);
+            for(let i = 0; i < string.length;i++){
+                expect(string[i]).toEqual(chars[i].value);
+            }
+        });
+
+    });
 });
