@@ -1,4 +1,4 @@
-//TODO Write a util project to combin all my util functions.
+//TODO Write a util project to combine all my util functions.
 
 
 //TODO Move assertions to a separate project.
@@ -11,6 +11,7 @@
  */
 export function assert(condition: boolean, message: string = "Assertion failed") {
     if (!condition) {
+        //TODO Add an AssertionError
         throw new Error(message);
     }
 }
