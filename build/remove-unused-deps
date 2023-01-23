@@ -1,4 +1,5 @@
 #!/bin/bash
+#FIXME This script removes typedoc-plugin-markdown, altough it is needed.
 file='unused-deps.txt'
 echo "list all unused deps"
 npx depcheck > $file
