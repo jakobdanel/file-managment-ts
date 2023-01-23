@@ -51,6 +51,44 @@ export function generateRandomCharacters(n: number): string {
     return result;
 }
 
+
+/**
+ * @abstract This function takes an abitrary 2 dimensional array and returns all values flattened
+ * into an 1 dimensional array.
+ * @param array The two dimensional array to flatten
+ * @returns The flattened array
+ */
+export function flattern2DArray<T>(array: T[][]): T[] {
+    let result: T[] = [];
+    for (let i = 0; i < array.length; i++) {
+        for (let j = 0; j < array[i].length; j++) {
+            result.push(array[i][j]);
+        }
+    }
+    return result;
+}
+
+/**
+ * @abstract This function will build an 2 dimensional array from an one dimensional array. It will
+ * add entriesPerRow entries to each column. If there is an remainder, the last element will have
+ * less entries.
+ * @param array The array to be transformed into two dimensions
+ * @param entriesPerRow The number of entries for eych row
+ * @returns The two dimensional array.
+ */
+export function buildTableFromArray<T>(array: T[], entriesPerRow: number): T[][] {
+    assertInteger(entriesPerRow);
+    assertNotNegative(entriesPerRow);
+    assert(entriesPerRow !== 0,"entriesPerRow must be positive");
+
+    let result: T[][] = [];
+    for (let i = 0; i < array.length; i += entriesPerRow) {
+        result.push(array.slice(i, i + entriesPerRow));
+    }
+    return result;
+}
+
+
 /**
  * @abstract Adding new lines every interval characters to the string. It iterates over the characters of the string.
  * Than the function will build a substring for each interval and adding a \n to the string
@@ -65,7 +103,7 @@ export function addingNewLinesToString(string: string, interval: number): string
     assertInteger(interval);
     let result = '';
     for (let i = 0; i < string.length; i += interval) {
-        result += string.substring(i, i + interval) + '\n';
+        result += string.slice(i, i + interval) + '\n';
     }
     return result;
 }

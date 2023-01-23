@@ -1,5 +1,5 @@
 import "jest"
-import { assert, assertInteger, assertNotNegative, generateRandomCharacters } from "./utils";
+import { addingNewLinesToString, assert, assertInteger, assertNotNegative, buildTableFromArray, flattern2DArray, generateRandomCharacters } from "./utils";
 
 describe("assert()", () => {
 
@@ -81,3 +81,50 @@ describe("generateRandomCharacters()", () => {
         })
     })
 });
+
+describe("flattern2DArray()", () => {
+
+    it("should flatten arrays", () => {
+        let exampleNumbers = [[1, 2, 3], [4, 5], [6, 7, 8, 9], []];
+        let exampleResults = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+        expect(flattern2DArray<number>(exampleNumbers)).toEqual(exampleResults);
+    });
+});
+
+describe("buildTableFromArray()", () => {
+
+    it("should build a table for fitting interval with array.length % entriesPerRow == 0", () => {
+        let exampleArray = [1, 2, 3, 4];
+        let exampleTable = [[1, 2], [3, 4]];
+
+        expect(buildTableFromArray<number>(exampleArray, 2)).toEqual(exampleTable);
+    })
+
+    it("should nuild a table if the interval leaves an remaining number of entries", () => {
+        let exampleArray = [1, 2, 3, 4, 5, 6, 7, 8];
+        let exampleTable = [[1, 2, 3], [4, 5, 6], [7, 8]];
+
+        expect(buildTableFromArray<number>(exampleArray, 3)).toEqual(exampleTable);
+    });
+});
+
+
+/*
+test('Adding new lines to string', () => {
+    expect(addingNewLinesToString('hello world', 5)).toBe('hello\n worl\nd');
+});
+
+
+test('Negative interval throws error', () => {
+    expect(() => addingNewLinesToString('hello world', -5)).toThrowError();
+});
+
+test('Non-integer interval throws error', () => {
+    expect(() => addingNewLinesToString('hello world', 4.5)).toThrowError();
+});
+
+test('Handles empty string', () => {
+    expect(addingNewLinesToString('', 5)).toBe('');
+});
+*/
