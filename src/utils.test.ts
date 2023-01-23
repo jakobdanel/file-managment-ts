@@ -1,5 +1,5 @@
 import "jest"
-import { addingNewLinesToString, assert, assertInteger, assertNotNegative, buildTableFromArray, flattern2DArray, generateRandomCharacters, randomArrayValue } from "./utils";
+import { addingNewLinesToString, assert, assertInteger, assertNotNegative, buildTableFromArray, flattern2DArray, generateRandomCharacters, leadingZeros, randomArrayValue } from "./utils";
 
 describe("assert()", () => {
 
@@ -130,7 +130,7 @@ describe("addingNewLinesToString()", () => {
     });
 });
 
-describe("randomArrayValue", () => {
+describe("randomArrayValue()", () => {
 
     it("Returns an value from the array",() => {
         const VALUES = ["bla","bli","blub","la","li","lu"];
@@ -140,4 +140,18 @@ describe("randomArrayValue", () => {
             n--;
         }
     })
+});
+
+describe("leadingZeros()", () => {
+
+    it("Should build a string representation with leading zeros", () => {
+        expect(leadingZeros(2,2)).toEqual("02");
+        expect(leadingZeros(32,2)).toEqual("32");
+        expect(leadingZeros(5,1)).toEqual("5");
+        expect(leadingZeros(1,5)).toEqual("00001");
+        expect(leadingZeros(100,5)).toEqual("00100");
+        expect(leadingZeros(200,2)).toEqual("200");
+
+
+    });
 });
