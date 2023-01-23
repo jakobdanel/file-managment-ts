@@ -1,5 +1,5 @@
 import "jest"
-import { addingNewLinesToString, assert, assertInteger, assertNotNegative, buildTableFromArray, flattern2DArray, generateRandomCharacters } from "./utils";
+import { addingNewLinesToString, assert, assertInteger, assertNotNegative, buildTableFromArray, flattern2DArray, generateRandomCharacters, randomArrayValue } from "./utils";
 
 describe("assert()", () => {
 
@@ -128,4 +128,16 @@ describe("addingNewLinesToString()", () => {
     it('Handles empty string', () => {
         expect(addingNewLinesToString('', 5)).toBe('');
     });
+});
+
+describe("randomArrayValue", () => {
+
+    it("Returns an value from the array",() => {
+        const VALUES = ["bla","bli","blub","la","li","lu"];
+        let n = 10;
+        while(n > 0){
+            expect(VALUES.indexOf(randomArrayValue<string>(VALUES))).not.toBe(-1);
+            n--;
+        }
+    })
 });
