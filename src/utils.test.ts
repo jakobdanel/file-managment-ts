@@ -1,5 +1,5 @@
 import "jest"
-import { addingNewLinesToString, assert, assertInteger, assertNotNegative, buildTableFromArray, flattern2DArray, generateFileName, generateRandomCharacters, leadingZeros, randomArrayValue } from "./utils";
+import { addingNewLinesToString, assert, assertInteger, assertNotNegative, buildTableFromArray, executeCommand, flattern2DArray, generateFileName, generateRandomCharacters, leadingZeros, randomArrayValue } from "./utils";
 
 describe("assert()", () => {
 
@@ -160,5 +160,21 @@ describe("generateFileName()",() => {
 
     it("should start with 'test_",() => {
         expect(generateFileName(1)).toMatch(/^test_/);
-    });
+    }); 
 })
+
+
+describe('executeCommand', () => {
+    test('should execute command and return output', async () => {
+        const output = await executeCommand('echo "hello world"');
+        expect(output).toEqual({ ok: true, code: 0, message: 'hello world\n' });
+    });
+
+    test('should execute command and return error message', async () => {
+        const output = await executeCommand('nonexistent-command');
+        expect(output.ok).toBe(false);
+        expect(output.code).not.toBe(0);
+        expect(output.message).toBeTruthy();
+    });
+});
+

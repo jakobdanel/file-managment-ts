@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateFileName = exports.leadingZeros = exports.randomArrayValue = exports.addingNewLinesToString = exports.generateRandomCharacters = exports.assertInteger = exports.assertNotNegative = exports.assert = void 0;
+exports.executeCommand = exports.generateFileName = exports.leadingZeros = exports.randomArrayValue = exports.addingNewLinesToString = exports.buildTableFromArray = exports.flattern2DArray = exports.generateRandomCharacters = exports.assertInteger = exports.assertNotNegative = exports.assert = void 0;
+const char_1 = require("./char");
+const child_process_1 = require("child_process");
 function assert(condition, message = "Assertion failed") {
     if (!condition) {
         throw new Error(message);
@@ -25,13 +27,39 @@ function generateRandomCharacters(n) {
     return result;
 }
 exports.generateRandomCharacters = generateRandomCharacters;
+function flattern2DArray(array) {
+    let result = [];
+    for (let i = 0; i < array.length; i++) {
+        for (let j = 0; j < array[i].length; j++) {
+            result.push(array[i][j]);
+        }
+    }
+    return result;
+}
+exports.flattern2DArray = flattern2DArray;
+function buildTableFromArray(array, entriesPerRow) {
+    assertInteger(entriesPerRow);
+    assertNotNegative(entriesPerRow);
+    assert(entriesPerRow !== 0, "entriesPerRow must be positive");
+    let result = [];
+    for (let i = 0; i < array.length; i += entriesPerRow) {
+        result.push(array.slice(i, i + entriesPerRow));
+    }
+    return result;
+}
+exports.buildTableFromArray = buildTableFromArray;
 function addingNewLinesToString(string, interval) {
     assertNotNegative(interval);
     assertInteger(interval);
-    let result = '';
-    for (let i = 0; i < string.length; i += interval) {
-        result += string.substring(i, i + interval) + '\n';
-    }
+    let chars = char_1.Char.fromString(string);
+    let table = buildTableFromArray(chars, interval);
+    let lines = [];
+    table.forEach(row => {
+        row.push(new char_1.Char("\n"));
+        lines.push(char_1.Char.toString(row));
+    });
+    let result = "";
+    lines.forEach(line => result += line);
     return result;
 }
 exports.addingNewLinesToString = addingNewLinesToString;
@@ -81,4 +109,19 @@ function generateFileName(n) {
     return `test_${leadingZeros(n, 3)}.${randomArrayValue(fileExtensions)}`;
 }
 exports.generateFileName = generateFileName;
+function executeCommand(command) {
+    return new Promise((resolve, reject) => {
+        (0, child_process_1.exec)(command, (err, stdout, stderr) => {
+            if (err) {
+                if (err.code === undefined)
+                    err.code = 0;
+                resolve({ ok: false, code: err.code, message: stderr });
+            }
+            else {
+                resolve({ ok: true, code: 0, message: stdout });
+            }
+        });
+    });
+}
+exports.executeCommand = executeCommand;
 //# sourceMappingURL=utils.js.map

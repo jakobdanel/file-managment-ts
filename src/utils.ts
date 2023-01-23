@@ -1,4 +1,5 @@
 import { Char } from './char';
+import { exec } from 'child_process';
 //TODO Write a util project to combine all my util functions.
 
 
@@ -104,7 +105,7 @@ export function addingNewLinesToString(string: string, interval: number): string
     assertInteger(interval);
     let chars: Char[] = Char.fromString(string);
     let table = buildTableFromArray<Char>(chars, interval);
-    let lines:string[] = []
+    let lines: string[] = []
     table.forEach(row => {
         row.push(new Char("\n"));
         lines.push(Char.toString(row));
@@ -189,4 +190,39 @@ export function generateFileName(n: number): string {
     assertNotNegative(n);
     assertInteger(n);
     return `test_${leadingZeros(n, 3)}.${randomArrayValue<string>(fileExtensions)}`;
+}
+
+/**
+ * @abstract This type describing the output of an linux system call. It is containing an flag
+ * indicating whether the call was successful, the exit code and the message.
+ * @type
+ * @param ok (boolean): A boolean value indicating whether the command executed successfully (true)
+ * or not (false).
+ * @param code (number): The exit code of the command. A non-zero exit code indicates an error
+ * occurred.
+ * @param message (string): The output of the command, or the error message if an error occurred.
+ */
+type CommandOutput = { ok: boolean, code: number, message: string }
+
+/**
+ * 
+ * @abstract The executeCommand() function is a Node.js utility function for running command line
+ * commands and capturing the output. It takes a single argument, a string representing the command
+ * to be executed, and returns a promise that resolves to an object containing the output, exit
+ * code, and error message (if applicable).
+ * @async
+ * @param {string} command - The command to be executed in the command line.
+ * @returns {Promise<CommandOutput>} A promise that resolves to an object 
+ */
+export function executeCommand(command: string): Promise<CommandOutput> {
+    return new Promise<CommandOutput>((resolve, reject) => {
+        exec(command, (err, stdout, stderr) => {
+            if (err) {
+                if (err.code === undefined) err.code = 0;
+                resolve({ ok: false, code: err.code, message: stderr })
+            } else {
+                resolve({ ok: true, code: 0, message: stdout })
+            }
+        })
+    });
 }
