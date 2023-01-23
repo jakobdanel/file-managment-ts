@@ -46,6 +46,13 @@ export class Char {
         return result;
     }
 
+    /**
+     * @abstract Builds an string from an array of characters. Iterates over each character
+     * and builds the string
+     * @static
+     * @param cs The array of characters to build the string from
+     * @returns The string.
+     */
     public static toString(cs: Char[]): string {
         let result: string = "";
         cs.forEach(c => result += c.value);
