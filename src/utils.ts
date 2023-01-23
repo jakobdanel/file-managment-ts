@@ -1,3 +1,4 @@
+import { Char } from './char';
 //TODO Write a util project to combine all my util functions.
 
 
@@ -79,7 +80,7 @@ export function flattern2DArray<T>(array: T[][]): T[] {
 export function buildTableFromArray<T>(array: T[], entriesPerRow: number): T[][] {
     assertInteger(entriesPerRow);
     assertNotNegative(entriesPerRow);
-    assert(entriesPerRow !== 0,"entriesPerRow must be positive");
+    assert(entriesPerRow !== 0, "entriesPerRow must be positive");
 
     let result: T[][] = [];
     for (let i = 0; i < array.length; i += entriesPerRow) {
@@ -101,10 +102,15 @@ export function buildTableFromArray<T>(array: T[], entriesPerRow: number): T[][]
 export function addingNewLinesToString(string: string, interval: number): string {
     assertNotNegative(interval);
     assertInteger(interval);
-    let result = '';
-    for (let i = 0; i < string.length; i += interval) {
-        result += string.slice(i, i + interval) + '\n';
-    }
+    let chars: Char[] = Char.fromString(string);
+    let table = buildTableFromArray<Char>(chars, interval);
+    let lines:string[] = []
+    table.forEach(row => {
+        row.push(new Char("\n"));
+        lines.push(Char.toString(row));
+    })
+    let result = "";
+    lines.forEach(line => result += line);
     return result;
 }
 

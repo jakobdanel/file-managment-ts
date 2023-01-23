@@ -110,21 +110,22 @@ describe("buildTableFromArray()", () => {
 });
 
 
-/*
-test('Adding new lines to string', () => {
-    expect(addingNewLinesToString('hello world', 5)).toBe('hello\n worl\nd');
-});
+describe("addingNewLinesToString()", () => {
+    it('Adding new lines to string', () => {
+        expect(addingNewLinesToString('1234567890', 5)).toBe('12345\n67890\n');
+        expect(addingNewLinesToString('12345', 2)).toBe('12\n34\n5\n');
+    });
 
 
-test('Negative interval throws error', () => {
-    expect(() => addingNewLinesToString('hello world', -5)).toThrowError();
-});
+    it('Negative interval throws error', () => {
+        expect(() => addingNewLinesToString('hello world', -5)).toThrowError();
+    });
 
-test('Non-integer interval throws error', () => {
-    expect(() => addingNewLinesToString('hello world', 4.5)).toThrowError();
-});
+    it('Non-integer interval throws error', () => {
+        expect(() => addingNewLinesToString('hello world', 4.5)).toThrowError();
+    });
 
-test('Handles empty string', () => {
-    expect(addingNewLinesToString('', 5)).toBe('');
+    it('Handles empty string', () => {
+        expect(addingNewLinesToString('', 5)).toBe('');
+    });
 });
-*/
