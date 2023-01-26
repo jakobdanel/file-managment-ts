@@ -226,3 +226,31 @@ export function executeCommand(command: string): Promise<CommandOutput> {
         })
     });
 }
+
+
+/**
+ * @abstract This enumeration describing the two types of items that are common in an file system:
+ * File and Directory. It can be used as parameter for functions, that need an specific logic for
+ * one of the types.
+ * @enum
+ * @param Directory Represents a directory
+ * @param File Represents a file
+ */
+export enum FileSystemType { Directory, File }
+
+
+/**
+ * @abstract This funcion is checking if an file or dir is existent. Therefore it is using the
+ * Linux [ ] command for checking an expression. 
+ * @param path The path to be checked
+ * @param fst FileSystemType which specifies if it should check for a file or a directory
+ * @returns An Promise that resolves at any input, whith an boolean value indicating whether the
+ * file or directory is existent or not.
+ */
+export async function checkExists(path: string, fst: FileSystemType): Promise<boolean> {
+    let flag = fst === FileSystemType.Directory ? "d" : "f";
+    let result = await executeCommand(`[ -${flag} ${path} ]`);
+    return new Promise<boolean>((resolve, reject) => {
+        return resolve(result.ok);
+    });
+}

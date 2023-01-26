@@ -1,5 +1,5 @@
 import "jest"
-import { addingNewLinesToString, assert, assertInteger, assertNotNegative, buildTableFromArray, executeCommand, flattern2DArray, generateFileName, generateRandomCharacters, leadingZeros, randomArrayValue } from "./utils";
+import { addingNewLinesToString, assert, assertInteger, assertNotNegative, buildTableFromArray, checkExists, executeCommand, FileSystemType, flattern2DArray, generateFileName, generateRandomCharacters, leadingZeros, randomArrayValue } from "./utils";
 
 describe("assert()", () => {
 
@@ -176,5 +176,28 @@ describe('executeCommand', () => {
         expect(output.code).not.toBe(0);
         expect(output.message).toBeTruthy();
     });
+});
+
+describe('checkExists', () => {
+    test("should return true if an file exists", async () => {
+        expect(await checkExists("/home/jakob/projects/file-managment-ts/src/utils.ts",FileSystemType.File)).toBe(true);
+
+    });
+
+
+    test("should return true if an directory exists", async () => {
+        expect(await checkExists("/home/jakob/projects/file-managment-ts/src",FileSystemType.Directory)).toBe(true);
+
+    });
+
+    test("should return false if a file does not exist", async () => {
+        expect(await checkExists("bla",FileSystemType.File)).toBe(false);
+    })
+
+
+    test("should return false if a directory does not exist", async () => {
+        expect(await checkExists("bla",FileSystemType.Directory)).toBe(false);
+    })
+
 });
 
