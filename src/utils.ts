@@ -259,6 +259,7 @@ export async function checkExists(path: string, fst: FileSystemType): Promise<bo
 
 export async function pwd(): Promise<string> {
     let pwd = (await executeCommand("pwd")).message;
+    pwd = pwd.substring(0, pwd.length - 1);
     return new Promise<string>((resolve, reject) => {
         return resolve(pwd);
     })

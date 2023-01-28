@@ -1,5 +1,4 @@
-import { existsSync } from "fs";
-
+import { checkExists, FileSystemType } from "./utils";
 
 /**
  * @abstract This class representing an FilePath. At creation  it will check if the path is resovable. If so, it will create an object with 
@@ -37,15 +36,19 @@ export class FilePath {
      * Not implemented properly.
      */
     constructor(filePath: string) {
-        if (existsSync(filePath)) {
-            filePath = FilePath.normalizePath(filePath);
+        FilePath.isPathResolvable(filePath)
+            .then((isResovable: boolean) => {
+                if(isResovable){
+                    filePath = FilePath.normalizePath(filePath);
+                }else {
+                    // TODO Better error handling here:
+                    throw new Error("Unresolvable file path"); 
+                }
+            }).catch((error: Error) => {
+                throw new Error("Error executing the command, Details: " + error.message);
+            });
+    };
 
-
-        } else {
-            //TODO here adding an proper debugging of the file path:
-            throw new Error("Invalid file path");
-        }
-    }
 
     /**
      * Not implemented properly!
@@ -66,6 +69,23 @@ export class FilePath {
         }
     }
 
+    public static async isPathResolvable(path: string): Promise<boolean> {
+        //Check if the path is a existing file.
+        let isExistingFile = await checkExists(path, FileSystemType.File);
+
+        //Check if the path without the filename exists.
+        let pathSplitted = path.split("/");
+        let lastElem = pathSplitted.pop();
+        let dir = "";
+        if (pathSplitted.length == 0) {
+            dir = lastElem || "";
+        } else {
+            dir = pathSplitted.join("/");
+        }
+        let isExistingDirectory = await checkExists(dir, FileSystemType.Directory);
+        return isExistingFile || isExistingDirectory;
+    }
+
     /**
      * @abstract This static method will return the username of a given filepath string. It is used to determine if an Linux file system path is 
      * an users subclass and if so extracting the username. If the path is not in an users folder then the function will return undefined. It will also
@@ -76,9 +96,9 @@ export class FilePath {
      * @returns The username of the given filepath string or undefined if the path is not in an users folder.
      */
     public static getUserName(path: string): string | undefined {
-         if(path.startsWith("/home")){
+        if (path.startsWith("/home")) {
             return path.split("/")[2] || undefined;
-         } else return undefined;
+        } else return undefined;
     }
 
 }

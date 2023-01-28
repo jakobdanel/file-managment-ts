@@ -18,4 +18,24 @@ describe("FilePath", () => {
             expect(FilePath.getUserName("/bla/bla")).toBeUndefined();
         })
     });
+
+    describe("isPathResovable", () => {
+
+        test("should return true for existing files paths", async () => {
+            expect(await FilePath.isPathResolvable("/home/jakob/projects/file-managment-ts/src/filepath.ts")).toBe(true);
+            expect(await FilePath.isPathResolvable("/home/jakob/projects/file-managment-ts/src/main.test.ts")).toBe(true);
+            expect(await FilePath.isPathResolvable("/home/jakob/projects/file-managment-ts/src/README.md")).toBe(true);
+
+        })
+
+        test("should return true if the file do not exists, bit the specified folder, does ", async () => {
+            expect(await FilePath.isPathResolvable("/home/jakob/projects/file-managment-ts/src/filepath123.ts")).toBe(true);
+            expect(await FilePath.isPathResolvable("/home/jakob/projects/file-managment-ts/READA.txt")).toBe(true);
+
+        })
+
+        test("should return true if the dir do not exists",async () => {
+            expect(await FilePath.isPathResolvable("/home/bla/blub")).toBe(false);
+        })
+    })
 });

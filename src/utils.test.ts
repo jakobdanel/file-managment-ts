@@ -1,5 +1,5 @@
 import "jest"
-import { addingNewLinesToString, assert, assertInteger, assertNotNegative, buildAbsolutePath, buildTableFromArray, checkExists, executeCommand, FileSystemType, flattern2DArray, generateFileName, generateRandomCharacters, leadingZeros, randomArrayValue } from "./utils";
+import { addingNewLinesToString, assert, assertInteger, assertNotNegative, buildAbsolutePath, buildTableFromArray, checkExists, executeCommand, FileSystemType, flattern2DArray, generateFileName, generateRandomCharacters, leadingZeros, pwd, randomArrayValue } from "./utils";
 
 describe("assert()", () => {
 
@@ -200,8 +200,9 @@ describe('checkExists', () => {
     })
 
 });
+
 describe("buildAbsolutePath", () => {
-    
+
     it('should build the absolute path correctly', () => {
         const packageDirectory = '/home/user/project/';
         const filePath = 'test-folder/test-file.txt';
@@ -210,11 +211,24 @@ describe("buildAbsolutePath", () => {
         const absolutePath = buildAbsolutePath(filePath);
         expect(absolutePath).toBe(expectedAbsolutePath);
     });
-    
+
     it('should throw an error if config.json cannot be parsed', () => {
-        jest.spyOn(JSON, 'parse').mockImplementation(() => {
+
+        let spy = jest.spyOn(JSON, 'parse').mockImplementation(() => {
             throw new Error('Error parsing config.json');
         });
         expect(() => buildAbsolutePath('./test-folder/test-file.txt')).toThrowError(/Error parsing config.json/);
+
+        spy.mockRestore();
     });
-});    
+});
+
+describe("pwd", () => {
+
+    test("should return the correct path of the directory", async () => {
+        let dirPath: string = buildAbsolutePath("");
+        let expectedPath: string = dirPath.substring(0, dirPath.length - 1);
+        const receivedPath = await pwd();
+        expect(expectedPath.length).toBe(receivedPath.length);
+    });
+});
