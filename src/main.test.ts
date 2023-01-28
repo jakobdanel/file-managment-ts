@@ -66,7 +66,7 @@ const containsKeys = (object: Object, keys: string[]): boolean => {
 /**
  * This function adding a bunch of files with random content to 
  */
-const createExampleFiles = (n: number = 100) => {
+const createExampleFiles = (n: number = 10) => {
     if (n >= 1000) {
         console.log("WARNING: The implementation of the file name generator allows only three digits. For that reason n must be maximum of 1000. Set n to 1000.");
         n = 1000;
@@ -74,8 +74,8 @@ const createExampleFiles = (n: number = 100) => {
     createExampleFile("test_001.txt", "test");
     for (let i = 2; i <= n; i++) {
         let fName = generateFileName(i);
-        let content = generateRandomCharacters(10000);
-        content = addingNewLinesToString(content, 100);
+        let content = generateRandomCharacters(1000);
+        content = addingNewLinesToString(content, 10);
         createExampleFile(fName, content);
     }
 }
