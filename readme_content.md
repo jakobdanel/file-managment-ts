@@ -15,14 +15,14 @@ This module should be used to do stuff like file creating moving, copieng, etc. 
 
 #### Get content
 - [x] get the content of a file.
-- [ ] show metadata of a file.
+- [x] show metadata of a file.
 - [ ] show metadata of a dir.
 - [ ] (optional) search files (by regex).
 - [ ] (optional) search file content (by regex).
 
 #### Add content
-- [ ] overwrite content of a file by string.
-- [ ] add content at the end of a file.
+- [x] overwrite content of a file by string.
+- [x] add content at the end of a file.
 - [ ] add content to a list of files.
 - [ ] add content to every file of a dir.
 

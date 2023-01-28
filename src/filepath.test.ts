@@ -34,8 +34,9 @@ describe("FilePath", () => {
 
         })
 
-        test("should return true if the dir do not exists",async () => {
+        test("should return true if the dir do not exists", async () => {
             expect(await FilePath.isPathResolvable("/home/bla/blub")).toBe(false);
+
         })
-    })
+    });
 });
