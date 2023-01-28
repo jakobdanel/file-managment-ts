@@ -61,7 +61,7 @@ Methods should be fully functional, meaning they should have no side-effects. Fo
 1. ```git clone https://github.com/jakobdanel/file-managment-ts```
 2. Open ``` config.example.json ``` with an text editor of your own choice.
 3. Replacing the value of ``` packageDirectory ``` with the path to the directory, where you have cloned the project. 
-4. Rename the file into ```config.json `` and save it. 
+4. Rename the file into ```config.json ``` and save it. 
 
 
 #### Transpile
