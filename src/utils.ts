@@ -1,6 +1,7 @@
 import { Char } from './char';
 import { exec } from 'child_process';
 import { getContent } from './main';
+let path = require('path');
 //TODO Write a util project to combine all my util functions.
 
 
@@ -267,11 +268,17 @@ export async function pwd(): Promise<string> {
  * The function building the absolute paths of an file in this directory. If you passing an relative path from the 
  * root of this module to the function, it will return the absolute path build with the specified 
  * home path from the \{@see config.json \} file.
- * @param path The path which will be converted to the absolute path.
+ * @param filePath The path which will be converted to the absolute path.
  * @returns The absolute path of the given path.
  */
-export function buildAbsolutePath(path: string): string {
-    const config = JSON.parse(getContent("./../config.json") || "{}")
-    const packagePath = config.packagePath;
-    return packagePath + path;
+export function buildAbsolutePath(filePath: string): string {
+    let config: any = {};
+    try {
+        let configText = getContent(path.join(__dirname , "./../config.json"));
+        config = JSON.parse(configText || "")
+    } catch (e) {
+        throw new Error("Error parsing config.json, Details: " + e.message);
+    }
+    const packagePath = config.packageDirectory;
+    return packagePath + filePath;
 }

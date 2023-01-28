@@ -2,7 +2,7 @@ import { readFileSync, existsSync } from "fs";
 import * as path from "path";
 import { addContentFile, createEmptyFile, createFile, deleteFile, fileExists, getContent, getMetaDataDir, getMetaDataFile, writeFile } from "./main"
 import { File } from "./file";
-import { addingNewLinesToString, generateFileName, generateRandomCharacters } from "./utils";
+import { addingNewLinesToString, buildAbsolutePath, generateFileName, generateRandomCharacters } from "./utils";
 import { InvalidFilePathError } from "./error";
 
 
@@ -29,7 +29,7 @@ let fileContents: string[] = []
  * @param fileContent The content for the created file.
  */
 const createExampleFile = (filePath: string, fileContent: string) => {
-    let absolutePath = __dirname + "/test-dir/" + filePath;
+    let absolutePath = buildAbsolutePath("src/test-dir/" + filePath);
     filePaths.push(absolutePath);
     fileContents.push(fileContent);
     let f = new File(absolutePath)
@@ -89,7 +89,7 @@ const deleteExampleFiles = () => {
 
 
 describe("createEmptyFile()", () => {
-    const filePath = path.join(__dirname, "./test-dir/test-file.txt");
+    const filePath = buildAbsolutePath("src/test-dir/test-file.txt");
     let file: File;
 
 
@@ -159,7 +159,7 @@ describe("createFile()", () => {
     });
 
     it("should throw an error if the file already exists", () => {
-        expect(() => createFile(__dirname + "/test-dir/test_001.txt", "")).toThrow("File already exists");
+        expect(() => createFile(buildAbsolutePath("src/test-dir/test_001.txt"), "")).toThrow("File already exists");
     });
 
 })
@@ -181,8 +181,8 @@ describe("fileExists()", () => {
 
     it("should return false if the file is not existing", () => {
 
-        expect(fileExists("./test-dir/no_file.txt")).toBe(false);
-        expect(fileExists("./test-dir/no_file.json")).toBe(false);
+        expect(fileExists(buildAbsolutePath("src/test-dir/no_file.txt"))).toBe(false);
+        expect(fileExists(buildAbsolutePath("src/test-dir/no_file.json"))).toBe(false);
         expect(fileExists("")).toBe(false);
     })
 
@@ -196,8 +196,8 @@ describe("getContent()", () => {
 
     it("should return null if the file does not exist", () => {
 
-        expect(getContent("./test-dir/no_file.txt")).toBe(null);
-        expect(getContent("./test-dir/no_file.json")).toBe(null);
+        expect(getContent(buildAbsolutePath("src/test-dir/no_file.txt"))).toBe(null);
+        expect(getContent(buildAbsolutePath("src/test-dir/no_file.json"))).toBe(null);
         expect(getContent("")).toBe(null);
     });
 

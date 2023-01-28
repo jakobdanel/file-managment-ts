@@ -180,13 +180,13 @@ describe('executeCommand', () => {
 
 describe('checkExists', () => {
     test("should return true if an file exists", async () => {
-        expect(await checkExists("/home/jakob/projects/file-managment-ts/src/utils.ts", FileSystemType.File)).toBe(true);
+        expect(await checkExists(buildAbsolutePath("src/utils.ts"), FileSystemType.File)).toBe(true);
 
     });
 
 
     test("should return true if an directory exists", async () => {
-        expect(await checkExists("/home/jakob/projects/file-managment-ts/src", FileSystemType.Directory)).toBe(true);
+        expect(await checkExists(buildAbsolutePath("src"), FileSystemType.Directory)).toBe(true);
 
     });
 
@@ -200,16 +200,21 @@ describe('checkExists', () => {
     })
 
 });
-
-describe('buildAbsolutePath()', () => {
-
+describe("buildAbsolutePath", () => {
+    
     it('should build the absolute path correctly', () => {
-        const packagePath = '/home/user/project/';
-        const path = 'test-folder/test-file.txt';
+        const packageDirectory = '/home/user/project/';
+        const filePath = 'test-folder/test-file.txt';
         const expectedAbsolutePath = '/home/user/project/test-folder/test-file.txt';
-        jest.spyOn(JSON, 'parse').mockImplementation(() => ({ packagePath }));
-        const absolutePath = buildAbsolutePath(path);
+        jest.spyOn(JSON, 'parse').mockImplementation(() => ({ packageDirectory }));
+        const absolutePath = buildAbsolutePath(filePath);
         expect(absolutePath).toBe(expectedAbsolutePath);
     });
-});
-
+    
+    it('should throw an error if config.json cannot be parsed', () => {
+        jest.spyOn(JSON, 'parse').mockImplementation(() => {
+            throw new Error('Error parsing config.json');
+        });
+        expect(() => buildAbsolutePath('./test-folder/test-file.txt')).toThrowError(/Error parsing config.json/);
+    });
+});    
