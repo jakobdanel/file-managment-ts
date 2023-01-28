@@ -1,5 +1,5 @@
 import "jest"
-import { addingNewLinesToString, assert, assertInteger, assertNotNegative, buildTableFromArray, checkExists, executeCommand, FileSystemType, flattern2DArray, generateFileName, generateRandomCharacters, leadingZeros, randomArrayValue } from "./utils";
+import { addingNewLinesToString, assert, assertInteger, assertNotNegative, buildAbsolutePath, buildTableFromArray, checkExists, executeCommand, FileSystemType, flattern2DArray, generateFileName, generateRandomCharacters, leadingZeros, randomArrayValue } from "./utils";
 
 describe("assert()", () => {
 
@@ -132,10 +132,10 @@ describe("addingNewLinesToString()", () => {
 
 describe("randomArrayValue()", () => {
 
-    it("Returns an value from the array",() => {
-        const VALUES = ["bla","bli","blub","la","li","lu"];
+    it("Returns an value from the array", () => {
+        const VALUES = ["bla", "bli", "blub", "la", "li", "lu"];
         let n = 10;
-        while(n > 0){
+        while (n > 0) {
             expect(VALUES.indexOf(randomArrayValue<string>(VALUES))).not.toBe(-1);
             n--;
         }
@@ -145,22 +145,22 @@ describe("randomArrayValue()", () => {
 describe("leadingZeros()", () => {
 
     it("Should build a string representation with leading zeros", () => {
-        expect(leadingZeros(2,2)).toEqual("02");
-        expect(leadingZeros(32,2)).toEqual("32");
-        expect(leadingZeros(5,1)).toEqual("5");
-        expect(leadingZeros(1,5)).toEqual("00001");
-        expect(leadingZeros(100,5)).toEqual("00100");
-        expect(leadingZeros(200,2)).toEqual("200");
+        expect(leadingZeros(2, 2)).toEqual("02");
+        expect(leadingZeros(32, 2)).toEqual("32");
+        expect(leadingZeros(5, 1)).toEqual("5");
+        expect(leadingZeros(1, 5)).toEqual("00001");
+        expect(leadingZeros(100, 5)).toEqual("00100");
+        expect(leadingZeros(200, 2)).toEqual("200");
 
 
     });
 });
 
-describe("generateFileName()",() => {
+describe("generateFileName()", () => {
 
-    it("should start with 'test_",() => {
+    it("should start with 'test_", () => {
         expect(generateFileName(1)).toMatch(/^test_/);
-    }); 
+    });
 })
 
 
@@ -180,24 +180,36 @@ describe('executeCommand', () => {
 
 describe('checkExists', () => {
     test("should return true if an file exists", async () => {
-        expect(await checkExists("/home/jakob/projects/file-managment-ts/src/utils.ts",FileSystemType.File)).toBe(true);
+        expect(await checkExists("/home/jakob/projects/file-managment-ts/src/utils.ts", FileSystemType.File)).toBe(true);
 
     });
 
 
     test("should return true if an directory exists", async () => {
-        expect(await checkExists("/home/jakob/projects/file-managment-ts/src",FileSystemType.Directory)).toBe(true);
+        expect(await checkExists("/home/jakob/projects/file-managment-ts/src", FileSystemType.Directory)).toBe(true);
 
     });
 
     test("should return false if a file does not exist", async () => {
-        expect(await checkExists("bla",FileSystemType.File)).toBe(false);
+        expect(await checkExists("bla", FileSystemType.File)).toBe(false);
     })
 
 
     test("should return false if a directory does not exist", async () => {
-        expect(await checkExists("bla",FileSystemType.Directory)).toBe(false);
+        expect(await checkExists("bla", FileSystemType.Directory)).toBe(false);
     })
 
+});
+
+describe('buildAbsolutePath()', () => {
+
+    it('should build the absolute path correctly', () => {
+        const packagePath = '/home/user/project/';
+        const path = 'test-folder/test-file.txt';
+        const expectedAbsolutePath = '/home/user/project/test-folder/test-file.txt';
+        jest.spyOn(JSON, 'parse').mockImplementation(() => ({ packagePath }));
+        const absolutePath = buildAbsolutePath(path);
+        expect(absolutePath).toBe(expectedAbsolutePath);
+    });
 });
 

@@ -1,5 +1,6 @@
 import { Char } from './char';
 import { exec } from 'child_process';
+import { getContent } from './main';
 //TODO Write a util project to combine all my util functions.
 
 
@@ -230,7 +231,7 @@ export function executeCommand(command: string): Promise<CommandOutput> {
 
 /**
  * @abstract This enumeration describing the two types of items that are common in an file system:
- * File and Directory. It can be used as parameter for functions, that need an specific logic for
+ * File and Directory. I    t can be used as parameter for functions, that need an specific logic for
  * one of the types.
  * @enum
  * @param Directory Represents a directory
@@ -253,4 +254,24 @@ export async function checkExists(path: string, fst: FileSystemType): Promise<bo
     return new Promise<boolean>((resolve, reject) => {
         return resolve(result.ok);
     });
+}
+
+export async function pwd(): Promise<string> {
+    let pwd = (await executeCommand("pwd")).message;
+    return new Promise<string>((resolve, reject) => {
+        return resolve(pwd);
+    })
+}
+
+/**
+ * The function building the absolute paths of an file in this directory. If you passing an relative path from the 
+ * root of this module to the function, it will return the absolute path build with the specified 
+ * home path from the \{@see config.json \} file.
+ * @param path The path which will be converted to the absolute path.
+ * @returns The absolute path of the given path.
+ */
+export function buildAbsolutePath(path: string): string {
+    const config = JSON.parse(getContent("./../config.json") || "{}")
+    const packagePath = config.packagePath;
+    return packagePath + path;
 }
