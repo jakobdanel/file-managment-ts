@@ -27,7 +27,7 @@ This module should be used to do stuff like file creating moving, copieng, etc. 
 - [ ] add content to every file of a dir.
 
 #### Deleting
-- [ ] delete a file.
+- [x] delete a file.
 - [ ] delete a dir (recursive and non recursive)
 
 #### Copieng

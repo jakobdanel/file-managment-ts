@@ -340,10 +340,9 @@ describe('addContentFileList()', () => {
     const mainContent = 'example main content of the file';
     const appendedContent = 'example appended content of the file';
     let files: File[] = [];
-    
+
     beforeEach(() => {
         for (let filePath of filePaths) {
-            console.log(filePath);
             createFile(filePath, mainContent);
         }
         files = addContentFileList(filePaths, appendedContent);
@@ -368,5 +367,23 @@ describe('addContentFileList()', () => {
         }
     })
 });
+
+describe('deleteFile', () => {
+
+    let file: File;
+    beforeEach(() => {
+        file = createEmptyFile(buildAbsolutePath('src/test-dir/example.txt'));
+        deleteFile(file.getPath());
+    })
+    it('should delete the correct file', () => {
+        expect(existsSync(file.getPath())).toBe(false);
+    });
+
+    it('should create and delete immediately if an file do not exists', () => {
+        deleteFile(buildAbsolutePath("src/test-dir/example.json"));
+        expect(existsSync(buildAbsolutePath("src/test-dir/example.json"))).toBe(false);
+    });
+
+})
 
 

@@ -178,6 +178,12 @@ export function addContentFileList(filePaths: string[], content: string) {
 
 // Deleting
 
+/**
+ * @abstract This function will delete the file at the specified path. It will not check if the
+ * file is existing or not. If the file at the provided filePath is not existent it will create an
+ * empty file and immediately delete the file.
+ * @param filePath The path to the file to be deleted
+ */
 export function deleteFile(filePath: string) {
     let file = new File(filePath);
     file.delete();
