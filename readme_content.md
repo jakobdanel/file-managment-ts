@@ -23,7 +23,7 @@ This module should be used to do stuff like file creating moving, copieng, etc. 
 #### Add content
 - [x] overwrite content of a file by string.
 - [x] add content at the end of a file.
-- [ ] add content to a list of files.
+- [x] add content to a list of files.
 - [ ] add content to every file of a dir.
 
 #### Deleting

@@ -1,6 +1,6 @@
 import { readFileSync, existsSync } from "fs";
 import * as path from "path";
-import { addContentFile, createEmptyFile, createFile, deleteFile, fileExists, getContent, getMetaDataDir, getMetaDataFile, writeFile } from "./main"
+import { addContentFile, addContentFileList, createEmptyFile, createFile, deleteFile, fileExists, getContent, getMetaDataDir, getMetaDataFile, writeFile } from "./main"
 import { File } from "./file";
 import { addingNewLinesToString, buildAbsolutePath, generateFileName, generateRandomCharacters } from "./utils";
 import { InvalidFilePathError } from "./error";
@@ -254,83 +254,119 @@ describe("getMetadataFile()", () => {
 
         for (let i = 0; i < files.length; i++) {
             let metadata = getMetaDataFile(filePaths[i]);
- 
-            expect(compareNumbers(new Date(metadata.atime).getTime(),metadata.atimeMs,1)).toBeTruthy();
-            expect(compareNumbers(new Date(metadata.mtime).getTime(),metadata.mtimeMs,1)).toBeTruthy();
-            expect(compareNumbers(new Date(metadata.ctime).getTime(),metadata.ctimeMs,1)).toBeTruthy();
-            expect(compareNumbers(new Date(metadata.birthtime).getTime(),metadata.birthtimeMs,1)).toBeTruthy();
+
+            expect(compareNumbers(new Date(metadata.atime).getTime(), metadata.atimeMs, 1)).toBeTruthy();
+            expect(compareNumbers(new Date(metadata.mtime).getTime(), metadata.mtimeMs, 1)).toBeTruthy();
+            expect(compareNumbers(new Date(metadata.ctime).getTime(), metadata.ctimeMs, 1)).toBeTruthy();
+            expect(compareNumbers(new Date(metadata.birthtime).getTime(), metadata.birthtimeMs, 1)).toBeTruthy();
 
         }
     });
 
-
-    describe('writeFile()', () => {
-        test('overwrites the content of an existing file', () => {
-            // Given
-            const filePath = 'example.txt';
-            const oldContent = 'old content';
-            const newContent = 'new content';
-            const file = new File(filePath);
-            file.updateContent(oldContent);
-
-            // When
-            const result = writeFile(filePath, newContent);
-
-            // Then
-            expect(result.getContent()).toBe(newContent);
-
-            file.delete();
-        });
-
-        test('creates a new file with the given content', () => {
-            // Given
-            const filePath = 'example.txt';
-            const content = 'example content';
-
-            // When
-            const result = writeFile(filePath, content);
-
-            // Then
-            expect(result.getContent()).toBe(content);
-
-            result.delete();
-        });
-    });
-
-
-    describe('addContentFile()', () => {
-        test('adds content to an existing file', () => {
-            // Given
-            const filePath = 'example.txt';
-            const oldContent = 'old content';
-            const newContent = 'new content';
-            const file = new File(filePath);
-            file.updateContent(oldContent);
-
-            // When
-            const result = addContentFile(filePath, newContent);
-
-            // Then
-            expect(result.getContent()).toBe(oldContent + newContent);
-
-            result.delete();
-        });
-
-        test('creates a new file with the given content', () => {
-            // Given
-            const filePath = 'example.txt';
-            const content = 'example content';
-
-            // When
-            const result = addContentFile(filePath, content);
-
-            // Then
-            expect(result.getContent()).toBe(content);
-            result.delete();
-        });
-    });
-
-
-
-
 });
+describe('writeFile()', () => {
+    test('overwrites the content of an existing file', () => {
+        // Given
+        const filePath = 'example.txt';
+        const oldContent = 'old content';
+        const newContent = 'new content';
+        const file = new File(filePath);
+        file.updateContent(oldContent);
+
+        // When
+        const result = writeFile(filePath, newContent);
+
+        // Then
+        expect(result.getContent()).toBe(newContent);
+
+        file.delete();
+    });
+
+    test('creates a new file with the given content', () => {
+        // Given
+        const filePath = 'example.txt';
+        const content = 'example content';
+
+        // When
+        const result = writeFile(filePath, content);
+
+        // Then
+        expect(result.getContent()).toBe(content);
+
+        result.delete();
+    });
+});
+
+
+describe('addContentFile()', () => {
+    test('adds content to an existing file', () => {
+        // Given
+        const filePath = 'example.txt';
+        const oldContent = 'old content';
+        const newContent = 'new content';
+        const file = new File(filePath);
+        file.updateContent(oldContent);
+
+        // When
+        const result = addContentFile(filePath, newContent);
+
+        // Then
+        expect(result.getContent()).toBe(oldContent + newContent);
+
+        result.delete();
+    });
+
+    test('creates a new file with the given content', () => {
+        // Given
+        const filePath = 'example.txt';
+        const content = 'example content';
+
+        // When
+        const result = addContentFile(filePath, content);
+
+        // Then
+        expect(result.getContent()).toBe(content);
+        result.delete();
+    });
+});
+
+describe('addContentFileList()', () => {
+
+    const filePaths = [
+        buildAbsolutePath("src/test-dir/example01.txt"),
+        buildAbsolutePath("src/test-dir/example02.txt"),
+        buildAbsolutePath("src/test-dir/example03.txt"),
+    ]
+    const mainContent = 'example main content of the file';
+    const appendedContent = 'example appended content of the file';
+    let files: File[] = [];
+    
+    beforeEach(() => {
+        for (let filePath of filePaths) {
+            console.log(filePath);
+            createFile(filePath, mainContent);
+        }
+        files = addContentFileList(filePaths, appendedContent);
+    })
+
+    afterEach(() => {
+        for (let filePath of filePaths) {
+            deleteFile(filePath);
+        }
+    });
+
+    it('should add the correct content to each file', () => {
+        for (let filePath of filePaths) {
+            expect(getContent(filePath)).toBe(mainContent + appendedContent);
+        }
+    });
+
+
+    it("should return the correct file objects", () => {
+        for (let i = 0; i < filePaths.length; i++) {
+            expect(filePaths[i]).toBe(files[i].getPath());
+        }
+    })
+});
+
+

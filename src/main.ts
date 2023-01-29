@@ -159,9 +159,16 @@ export function addContentDir(dirPath: string, content: string) {
 
 }
 
+/**
+ * @abstract This function adding content to the end of a list of files. The function iterated over
+ * each entrie in filePath and adding the string from content to the end of the file.
+ * @param filePaths The paths to the files, where to add the content
+ * @param content The content to be added
+ * @returns The files objects, where rhe content was added.
+ */
 export function addContentFileList(filePaths: string[], content: string) {
     let files: File[] = [];
-    for (let filePath in filePaths) {
+    for (let filePath of filePaths) {
         let file = new File(filePath);
         file.addContent(content);
         files.push(file);
