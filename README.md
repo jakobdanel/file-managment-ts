@@ -61,7 +61,7 @@
 <a name="readmemd"></a>
 
 ## file-managment-ts
-This module should be used to do stuff like file creating moving, copieng, etc. via Typescript/Javascript. It will contain basic API functions to input in your code. Implementation by implementing in ts and adding the ts flavour later.
+This module should be used to do stuff like file creating moving, copying, etc. via Typescript/Javascript. It will contain basic API functions to input in your code. Implementation by implementing in ts and adding the ts flavour later.
 
 ### Features
 
